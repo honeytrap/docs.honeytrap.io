@@ -1,0 +1,21 @@
+# Template used to create this container: /usr/share/lxc/templates/lxc-download
+# Parameters passed to the template: --dist ubuntu --release trusty --arch amd64
+# For additional config options, please look at lxc.container.conf(5)
+
+# Distribution configuration
+lxc.include = /usr/share/lxc/config/ubuntu.common.conf
+lxc.arch = x86_64
+
+# Container specific configuration
+lxc.rootfs = /var/lib/lxc/troje_base/rootfs
+lxc.utsname = troje_base
+
+# Network configuration
+lxc.network.type = veth
+lxc.network.link = lxcbr0
+lxc.network.flags = up
+lxc.network.hwaddr = 00:16:3e:8e:d7:6a
+lxc.console = none
+lxc.tty = 0
+lxc.cgroup.devices.deny = c 5:1 rwm
+lxc.cgroup.memory.limit_in_bytes = 512m

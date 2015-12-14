@@ -1,0 +1,62 @@
+---
+# tasks file for anansi
+
+- name: Setting ssh port
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^Port 22' line='Port {{ssh_port}}'
+  notify: restart sshd
+
+- name: Adding repository
+  apt_repository: repo='ppa:ubuntu-lxc/daily' state=present
+
+- name: Install software
+  apt: name={{ item }} state=present
+  with_items:
+    - aufs-tools
+    - git
+    - build-essential
+#    - mercuria
+    - libpcap-dev
+    - linux-image-3.19.0-22-generic
+    - linux-image-extra-3.19.0-22-generic
+    - lxc
+    - lxc-dev
+    - criu
+    - protobuf-c-compiler
+    - tmux
+    - tor
+
+- name: Install iptables rules
+  copy: src=iptables.rules dest=/etc/iptables.rules
+  notify: restart iptables
+
+- name: Create LXC template container
+  command: lxc-create -t download -n {{ anansi_lxc_template_name }} -- --dist {{ anansi_lxc_template_os }} --release {{ anansi_lxc_template_os_release }} --arch {{ anansi_lxc_template_arch }} creates=/var/lib/lxc/{{ anansi_lxc_template_name }}/
+
+- name: Install resolv.conf for lxc template
+  copy: src=resolv.conf dest=/var/lib/lxc/{{ anansi_lxc_template_name }}/rootfs/etc/resolv.conf
+
+- name: Configure lxc template
+  template: src=lxc_config.yml dest=/var/lib/lxc/{{ anansi_lxc_template_name }}/config
+
+- name: Fetch random hostnames for hostname generation
+  command: curl https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/servernames -v -o /tmp/hostnames
+
+- name: Get hostname
+  command: shuf -n 1 /tmp/hostnames
+  register: random_hostname
+
+- name: Set hostname for lxc template
+  command: echo {{ random_hostname.stdout }} > /var/lib/lxc/{{ anansi_lxc_template_name }}/rootfs/etc/hostname creates=/var/lib/lxc/{{ anansi_lxc_template_name }}/rootfs/etc/hostname
+
+- name: Updating lxc template
+  command: chroot /var/lib/lxc/troje_base/rootfs apt-get update -y
+
+- name: Upgrading lxc template
+  command: chroot /var/lib/lxc/troje_base/rootfs apt-get upgrade -y
+
+- name: Installing necessary packages in the lxc template
+  command: chroot /var/lib/lxc/troje_base/rootfs apt-get install -y openssh-server curl wget apache2
+
+- name: Setting up SSH in the lxc template
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^PermitRootLogin' line='PermitRootLogin yes'
+
