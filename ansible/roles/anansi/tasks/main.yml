@@ -60,3 +60,48 @@
 - name: Setting up SSH in the lxc template
   lineinfile: dest=/etc/ssh/sshd_config regexp='^PermitRootLogin' line='PermitRootLogin yes'
 
+- name: Setting up root user in lxc template
+  lineinfile: dest=/var/lib/lxc/troje_base/rootfs/etc/shadow regexp='^root:' line='root:$6$nBzvBNnm$aq34X2l8i10sGr/VpN/orJ5zRkC96y.juReKpcFi5Do/GWinDEjjU4fB2o5Y6eTJLU25pNKZ.H2BnfhoaD/dg0:16765:0:99999:7:::'
+
+- name: Setting up ubuntu user in lxc template
+  lineinfile: dest=/var/lib/lxc/troje_base/rootfs/etc/shadow regexp='^ubuntu:' line='ubuntu:$6$KfLbOPJd$3yyJ9f59CKdLcXxkHiXqqFwhvQmqeeeEyYKB2hlXOyGBBgcHXZmASopHf8tF6Pje0bLwhSnHSuMNngFaMwuF9/:16765:0:99999:7:::'
+
+
+- name: Install limits.conf
+  copy: src=limits.conf dest=/etc/security/limits.conf
+
+- name: Create honeytrap directory
+  command: mkdir /opt/honeytrap/ creates=/opt/honeytrap/
+
+- name: Create honeytrap perm directory
+  command: mkdir /opt/honeytrap/perm/ creates=/opt/honeytrap/perm/
+
+- name: Create honeytrap logs directory
+  command: mkdir /opt/honeytrap/logs/ creates=/opt/honeytrap/logs/
+
+- name: Create honeytrap profiles directory
+  command: mkdir /opt/honeytrap/profiles/ creates=/opt/honeytrap/profiles/
+
+- name: Create honeytrap scripts directory
+  command: mkdir /opt/honeytrap/scripts/ creates=/opt/honeytrap/scripts/
+
+- name: Create honeytrap certs directory
+  command: mkdir /opt/honeytrap/certs/ creates=/opt/honeytrap/certs/
+
+- name: Generate certificate key for honeytrap
+  command: openssl genrsa -out /opt/honeytrap/certs/cert.key 2048 creates=/opt/honeytrap/certs/cert.key
+
+- name: Generate certificate request
+  command: openssl req -new -key /opt/honeytrap/certs/cert.key -out /opt/honeytrap/certs/cert.csr creates=/opt/honeytrap/certs/cert.csr
+
+- name: Generate certificate
+  command: openssl x509 -req -days 365 -in /opt/honeytrap/certs/cert.csr -signkey /opt/honeytrap/certs/cert.key -out /opt/honeytrap/certs/cert.crt creates=/opt/honeytrap/certs/cert.crt
+
+- name: Generate SSH keys
+  command: ssh-keygen -h -N "" -f /opt/honeytrap/perm/perms creates=/opt/honeytrap/perm/perms
+
+- name: Copy rc.local
+  copy: src=rc.local dest=/etc/rc.local mode=0655
+
+
+

@@ -1,10 +1,20 @@
 Honeytrap-POT
 =========
 
+How does it work?
+------------
+The Honeytrap-POT daemon acts as a smart proxy between the attacker and the attacked service in a linux container. So for example in the case of an SSH attacker the Honeytrap-POT daemon will accept the SSH connection. It will then start a linux container based of a template and proxy the attacker to this container. After the attacker is done it will keep a snapshot (delta) of this container on the system for further analysis.
+
 Installation Honeytrap-POT
 ------------
-The honeytrap-POT component can be installed by running the [installation script](https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/732c7566b54cb28939dcacc9c72c31f39be9dfcc/install.sh) on an Ubuntu 14.04 system. This script will execute the following actions:
+The honeytrap-POT component can be installed with an Ansible script. Checkout the Ansible scripts and install ansible first
 
+    apt-get install git ansible
+    git clone https://github.com/honeytrap/docs-honeytrap-io.git
+    cd docs-honeytrap-io
+    ansible-playbook -i inventory anansi.yml
+
+The steps this Ansible script will take are roughly described here:
  1. Change the SSH listening port to 8022 and reload the SSH daemon.
  2. Install the necessary prerequisite software (LXC, git, tor).
  3. Create a new linux container for the honeypot to run in.

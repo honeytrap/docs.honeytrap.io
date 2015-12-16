@@ -1,0 +1,27 @@
+#!/bin/bash 
+modprobe xt_recent ip_pkt_list_tot=60
+
+iptables-restore < /etc/iptables.rules
+
+echo "Killing Current running honeytrap"
+# kill -9 `ps -ef | grep honey | grep -v grep | awk '{print $2}'` > /dev/null 2>&1
+tmux kill-session -t "honeytrap"
+
+lxc-ls --frozen | while read line; do echo Unfreezing $line; lxc-unfreeze --name $line; done < /dev/stdin
+lxc-ls --running | while read line; do echo Stopping $line; lxc-stop --name $line; done < /dev/stdin
+
+ulimit -n 10000
+
+cd /opt/honeytrap
+
+curl https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/honeytrap.yaml > ./honeytrap.yaml
+curl https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/torrc > /etc/tor/torrc
+service tor restart
+
+curl https://transfer.sh/wz6ck/honeytrap > ./honeytrap
+chmod +x ./honeytrap
+
+#tmux new-session -d -s "honeyup" "/bin/bash -l -c \"./honeyup --unfreeze-exec=./scripts/unfreeze.sh --freeze-exec=./scripts/freeze.sh --start-exec=./scripts/startup.sh --drop-exec=./scripts/drop.sh\";bash"
+tmux new-session -d -s "honeytrap" "/bin/bash -l -c \"./honeytrap --config honeytrap.yaml serv\";bash"
+
+exit 0
