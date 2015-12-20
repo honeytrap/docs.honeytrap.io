@@ -1,0 +1,8 @@
+---
+# defaults file for wordpress
+
+mysql_root_password: wordpress
+wp_mysql_db: wordpress
+wp_mysql_user: wordpress
+wp_mysql_password: wordpress
+wp_download_url: https://wordpress.org/latest.tar.gz

@@ -7,7 +7,7 @@ The Honeytrap-POT daemon acts as a smart proxy between the attacker and the atta
 
 Installation Honeytrap-POT
 ------------
-The honeytrap-POT component can be installed with an Ansible script. Checkout the Ansible scripts and install ansible first
+The honeytrap-POT component can be installed with an Ansible script. Install Ansible on the host you want to run honeytrap-POT. After this checkout the Ansible scripts and run the anansi.yml playbook:
 
     apt-get install git ansible
     git clone https://github.com/honeytrap/docs-honeytrap-io.git
