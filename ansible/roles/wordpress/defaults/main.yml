@@ -1,6 +1,7 @@
 ---
 # defaults file for wordpress
 
+anansi_lxc_template_name: troje_base
 mysql_root_password: wordpress
 wp_mysql_db: wordpress
 wp_mysql_user: wordpress
