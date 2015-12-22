@@ -36,7 +36,7 @@ Viewing the output of the honeytrap binary can be done by opening the honeytrap 
 
     tmux a -t honeytrap
 
-This will show you the output of the honeytrap binary and any logging that it produces. Detaching from this session can be done by pressing ctrl+b.
+This will show you the output of the honeytrap binary and any logging that it produces. Detaching from this session can be done by pressing ctrl+b d.
 
 Configuration
 -------------
