@@ -11,7 +11,7 @@ The honeytrap-POT component can be installed with an Ansible script. Install Ans
 
     apt-get install git ansible
     git clone https://github.com/honeytrap/docs-honeytrap-io.git
-    cd docs-honeytrap-io
+    cd docs-honeytrap-io/ansible
     ansible-playbook -i inventory anansi.yml
 
 The steps this Ansible script will take are roughly described here:
