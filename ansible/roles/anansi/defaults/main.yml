@@ -3,6 +3,6 @@
 
 ssh_port: 8022
 anansi_lxc_template_name: troje_base
-anansi_lxc_template_os: Ubuntu
+anansi_lxc_template_os: ubuntu
 anansi_lxc_template_os_release: trusty
 anansi_lxc_template_arch: amd64
