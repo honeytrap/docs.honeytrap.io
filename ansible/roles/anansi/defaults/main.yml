@@ -6,3 +6,6 @@ anansi_lxc_template_name: troje_base
 anansi_lxc_template_os: ubuntu
 anansi_lxc_template_os_release: trusty
 anansi_lxc_template_arch: amd64
+anansi_certificate_subject: "/C=NL/ST=Utrecht/L=Utrecht/O=None/CN=None"
+anansi_certificate_key_size: 2048
+anansi_certificate_days: 3650

@@ -88,14 +88,8 @@
 - name: Create honeytrap certs directory
   command: mkdir /opt/honeytrap/certs/ creates=/opt/honeytrap/certs/
 
-- name: Generate certificate key for honeytrap
-  command: openssl genrsa -out /opt/honeytrap/certs/cert.key 2048 creates=/opt/honeytrap/certs/cert.key
-
-- name: Generate certificate request
-  command: openssl req -new -key /opt/honeytrap/certs/cert.key -out /opt/honeytrap/certs/cert.csr creates=/opt/honeytrap/certs/cert.csr
-
 - name: Generate certificate
-  command: openssl x509 -req -days 365 -in /opt/honeytrap/certs/cert.csr -signkey /opt/honeytrap/certs/cert.key -out /opt/honeytrap/certs/cert.crt creates=/opt/honeytrap/certs/cert.crt
+  command: openssl req -x509 -new -newkey rsa:{{anansi_certificate_key_size}} -days {{anansi_certificate_days}} -nodes -keyout /opt/honeytrap/certs/cert.key -out /opt/honeytrap/certs/cert.crt -subj {{anansi_certificate_subject}} creates=/opt/honeytrap/certs/cert.crt
 
 - name: Generate SSH keys
   command: ssh-keygen -h -N "" -f /opt/honeytrap/perm/perms creates=/opt/honeytrap/perm/perms
