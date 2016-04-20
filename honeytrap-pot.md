@@ -47,6 +47,10 @@ apt-get install -y postfix
 curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/destinations > /etc/postfix/destinations
 curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/main.cf > /etc/postfix/main.cf
 
+Logstash/Kibana
+-------------
+Don't forget to install ELK and adopt iptables if you run Kibana locally. When not running locally, change honeytap.yaml config with external ip of logstash
+
 Configuration
 -------------
 The default configuration will configure honeytrap to listen to 6 ports of which 4 are attack vectors and 2 are management ports. The management ports are:
