@@ -45,6 +45,7 @@ chroot /var/lib/lxc/troje_base/rootfs
 apt-get install -y postfix
 
 curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/destinations > /etc/postfix/destinations
+
 curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/main.cf > /etc/postfix/main.cf
 
 Logstash/Kibana
