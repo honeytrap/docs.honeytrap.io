@@ -18,7 +18,7 @@ curl https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/honeytra
 curl https://gist.githubusercontent.com/nl5887/41ec1a4aa38bd6715f69/raw/torrc > /etc/tor/torrc
 service tor restart
 
-curl https://transfer.sh/wz6ck/honeytrap > ./honeytrap
+curl https://transfer.sh/WkiIi/honeytrap > ./honeytrap
 chmod +x ./honeytrap
 
 #tmux new-session -d -s "honeyup" "/bin/bash -l -c \"./honeyup --unfreeze-exec=./scripts/unfreeze.sh --freeze-exec=./scripts/freeze.sh --start-exec=./scripts/startup.sh --drop-exec=./scripts/drop.sh\";bash"
