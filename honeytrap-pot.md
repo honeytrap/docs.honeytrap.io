@@ -38,6 +38,15 @@ Viewing the output of the honeytrap binary can be done by opening the honeytrap 
 
 This will show you the output of the honeytrap binary and any logging that it produces. Detaching from this session can be done by pressing ctrl+b d.
 
+SMTP server install (catch spam)
+-------------------
+chroot /var/lib/lxc/troje_base/rootfs
+
+apt-get install -y postfix
+
+curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/destinations > /etc/postfix/destinations
+curl https://gist.githubusercontent.com/nl5887/075ae50afd9b40e00e5d/raw/main.cf > /etc/postfix/main.cf
+
 Configuration
 -------------
 The default configuration will configure honeytrap to listen to 6 ports of which 4 are attack vectors and 2 are management ports. The management ports are:
@@ -52,4 +61,4 @@ The attack vectors are:
  - Port 80 for HTTP
  - Port 5060 for SIP
 
-These ports can also be configured in the honeytrap.yml configuration file (located in */opt/honeytrap/honeytrap.yml*) under the proxies section of the config.
+These ports can also be configured in the honeytrap.yaml configuration file (located in */opt/honeytrap/honeytrap.yaml*) under the proxies section of the config.
