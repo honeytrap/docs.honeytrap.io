@@ -16,8 +16,8 @@
     - build-essential
 #    - mercuria
     - libpcap-dev
-    - linux-image-3.19.0-22-generic
-    - linux-image-extra-3.19.0-22-generic
+    - linux-image-generic
+    - linux-image-extra-generic
     - lxc
     - lxc-dev
  #   - criu
