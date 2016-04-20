@@ -20,7 +20,7 @@
     - linux-image-extra-3.19.0-22-generic
     - lxc
     - lxc-dev
-    - criu
+ #   - criu
     - protobuf-c-compiler
     - tmux
     - tor
